@@ -1,0 +1,32 @@
+<div class="manage-container">
+  <h2>Manage Motorcycles</h2>
+  
+  <form (ngSubmit)="addMotorcycle()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="newMotorcycle.name" name="name" required>
+    
+    <label for="crustType">Crust Type:</label>
+    <input type="text" id="crustType" [(ngModel)]="newMotorcycle.crustType" name="crustType" required>
+    
+    <label for="size">Size:</label>
+    <input type="text" id="size" [(ngModel)]="newMotorcycle.size" name="size" required>
+    
+    <label for="price">Price:</label>
+    <input type="number" id="price" [(ngModel)]="newMotorcycle.price" name="price" required>
+    
+    <label for="status">Status:</label>
+    <input type="text" id="status" [(ngModel)]="newMotorcycle.status" name="status" required>
+    
+    <label for="image">Image URL:</label>
+    <input type="text" id="image" [(ngModel)]="newMotorcycle.image" name="image" required>
+    
+    <button type="submit">Add Motorcycle</button>
+  </form>
+  
+  <h2>Motorcycle List</h2>
+  <div *ngFor="let motorcycle of motorcycles" class="motorcycle-item">
+    <img [src]="motorcycle.image" [alt]="motorcycle.name">
+    <p>{{ motorcycle.name }} - {{ motorcycle.price }}</p>
+    <button (click)="deleteMotorcycle(motorcycle)">Delete</button>
+  </div>
+</div>
