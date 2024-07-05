@@ -26,10 +26,11 @@ export class MotorcycleComponent implements OnInit {
   status: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 8;
-  totalPages: number = 5;
+  totalPages: number = 1;
   notification: string = '';
+  qrCodeImage: string = './assets/images/qr.jpg'; // Default QR code image path
 
-  constructor(private http: HttpClient, private router: Router) {} // Inject Router
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     // Option 1: Fetch motorcycles from API
@@ -132,6 +133,29 @@ export class MotorcycleComponent implements OnInit {
       motorcycle.quantity = 1;
       this.cart.push(motorcycle);
     }
+    
+    // Calculate the total price of the item(s) in the cart
+    const totalPrice = this.calculateCartTotal();
+    
+    // Update QR code image based on total cart price
+    if (totalPrice === 1200) {
+      this.qrCodeImage = './assets/images/1200.png';
+    } else if (totalPrice === 2400) {
+      this.qrCodeImage = './assets/images/2400.png';
+    } else {
+      // Default to randomize if not 1200 or 2400
+      this.randomizeQRCodeImage();
+    }
+  }
+  
+  
+
+  calculateCartTotal(): number {
+    let totalPrice = 0;
+    this.cart.forEach(item => {
+      totalPrice += item.price * (item.quantity || 1); // Multiply price by quantity
+    });
+    return totalPrice;
   }
 
   incrementQuantity(motorcycle: Motorcycle): void {
@@ -155,5 +179,10 @@ export class MotorcycleComponent implements OnInit {
 
   checkout(): void {
     this.router.navigate(['/payment']);
+  }
+
+  randomizeQRCodeImage(): void {
+    const images = ['./assets/images/r1q.jpg', './assets/images/q1r.jpg'];
+    this.qrCodeImage = images[Math.floor(Math.random() * images.length)];
   }
 }
