@@ -51,15 +51,22 @@
       <div *ngFor="let motorcycle of cart" class="cart-item">
         <img [src]="motorcycle.image" [alt]="motorcycle.motorcycleName" />
         <p>{{ motorcycle.motorcycleName }} - Quantity: {{ motorcycle.quantity }}</p>
+        <p>Price: {{ (motorcycle.price * motorcycle.quantity!) | currency }}</p>
         <button (click)="incrementQuantity(motorcycle)">+</button>
         <button (click)="decrementQuantity(motorcycle)">-</button>
         <button (click)="removeFromCart(motorcycle)">Remove</button>
       </div>
+     <!-- motorcycle.component.html -->
+<div class="cart-total">
+  <p>Total Price: {{ calculateCartTotal() | currency }}</p>
+  <img [src]="qrCodeImage" [alt]="'QR Code'" class="qr-code" />
+</div>
+
       <button class="checkout-button" (click)="checkout()">Go To Payment</button>
       <button class="refresh-cart-button" (click)="refreshCart()">Refresh Cart</button>
       <p>{{ notification }}</p>
     </div>
-  </div>
+  </div>    
 
   <script src="main.js"></script>
 </body>
